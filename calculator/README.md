@@ -16,32 +16,32 @@ This application uses Laravel Jetstream for its authentication system. Jetstream
 
 1. Clone the repository: First, you need to clone the repository to your local machine. You can do this with the following command:
 
-git clone <repository_url>
+   git clone <repository_url>
 
 2. Install MySQL: If you don't have MySQL installed, you'll need to install it. The installation process depends on your operating system. You can find instructions for various operating systems in the MySQL documentation.
 
 3. Install dependencies: Navigate to the project directory and install the necessary dependencies with Composer and npm:
 
-cd <project_directory>
-composer install
-npm install
+   cd calculator
+   composer install
+   npm install
 
 4. Set up environment variables: Copy the .env.example file to a new file named .env:
 
-cp .env.example .env
+   cp .env.example .env
 
 Then, open the .env file and set the necessary environment variables, such as your database connection details.
 
 5. Generate application key: Run the following command to generate a new application key:
 
-php artisan key:generate
+   php artisan key:generate
 
 6. Run migrations: Run the following command to execute the database migrations:
 
-php artisan migrate
+   php artisan migrate
 
 7. Start the server: Finally, you can start the Laravel server with the following command:
 
-php artisan serve
+   php artisan serve
 
 You can now access the application in your web browser at http://localhost:8000.
