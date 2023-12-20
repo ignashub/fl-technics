@@ -18,7 +18,7 @@ This application consists of several Vue components and Laravel backend endpoint
 
 - **User Migration**: (`database/migrations/2014_10_12_100000_create_users_table.php`) This migration file creates the users table in your database. It includes fields for the user's name, email, password, and other authentication-related fields.
 
-- **Calculation Migration**: (`database/migrations/xxxx_xx_xx_xxxxxx_create_calculations_table.php`) This migration file creates the calculations table in your database. It includes fields for storing each calculation's input numbers, operator, result, and the user who performed the calculation.
+- **Calculation Migration**: (`database/migrations/2023_12_20_020507_create_calculations_table.php`) This migration file creates the calculations table in your database. It includes fields for storing each calculation's input numbers, operator, result, and the user who performed the calculation.
 
 This application uses Laravel Jetstream for its authentication system. Jetstream provides a robust, modern scaffolding for user registration, login, email verification, two-factor authentication, session management, API support via Laravel Sanctum, and optional team management.
 
