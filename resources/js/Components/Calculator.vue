@@ -11,6 +11,7 @@
                 <button @click="setOperation('/')" class="operation-btn">÷</button>
                 <button @click="setOperation('%')" class="operation-btn">%</button>
                 <button @click="setOperation('^')" class="operation-btn">^</button>
+                <button @click="clearCalculator" class="operation-btn">C</button>
             </div>
             <button @click="calculate" class="calculate-btn">=</button>
         </div>
@@ -77,37 +78,50 @@ export default {
         });
 
         const setOperation = (op) => {
-            if (inputValue.value) {
-                if (storedValue.value && operator.value) {
-                    calculate();
-                    operator.value = op;
-                    displayValue.value = `${storedValue.value} ${op}`;
-                    inputValue.value = '';
-                } else {
-                    storedValue.value = inputValue.value;
-                    operator.value = op;
-                    displayValue.value = `${storedValue.value} ${op}`;
-                    inputValue.value = '';
+            if (inputValue.value || result.value) {
+                if (!inputValue.value && result.value) {
+                    storedValue.value = result.value;
+                } else if (inputValue.value) {
+                    if (storedValue.value && operator.value) {
+                        calculate();
+                    } else {
+                        storedValue.value = inputValue.value;
+                    }
                 }
+                operator.value = op;
+                displayValue.value = `${storedValue.value} ${op}`;
+                inputValue.value = '';
             }
         };
 
         const calculate = () => {
-            if (storedValue.value && inputValue.value && operator.value) {
+            if ((storedValue.value && inputValue.value && operator.value) || (result.value && inputValue.value)) {
+                let input1 = storedValue.value || result.value;
+                let input2 = inputValue.value;
+
                 axios.post('/calculate', {
-                    input1: storedValue.value,
-                    input2: inputValue.value,
+                    input1: input1,
+                    input2: input2,
                     operator: operator.value,
                 }).then(response => {
                     result.value = response.data.result;
-                    storedValue.value = result.value;
                     displayValue.value = result.value;
+                    // Reset the inputValue and operator to allow for a new operation
                     inputValue.value = '';
                     operator.value = null;
                     calculationDone.value = !calculationDone.value;
                     emit('calculation-done');
                 });
             }
+        };
+
+        const clearCalculator = () => {
+            inputValue.value = '';
+            storedValue.value = '';
+            operator.value = null;
+            result.value = '';
+            displayValue.value = '0';
+            calculationDone.value = false;
         };
         return {
             inputValue,
@@ -119,6 +133,7 @@ export default {
             calculate,
             setOperation,
             handleKeyup,
+            clearCalculator,
         };
     },
 };
