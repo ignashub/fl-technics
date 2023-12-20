@@ -8,8 +8,8 @@
             <option value="/">/</option>
         </select>
         <input v-model="input2" type="number">
-        <button @click="calculate" class="px-4 py-2 font-bold text-white bg-blue-900 rounded hover:bg-blue-700">Calculate</button>
-        <div>Result: {{ result }}</div>
+        <button @click="calculate" class="px-4 py-2 mt-4 font-bold text-white bg-blue-900 rounded hover:bg-blue-700">Calculate</button>
+        <div class="mt-4">Result: {{ result }}</div>
     </div>
 </template>
 

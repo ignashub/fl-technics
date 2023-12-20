@@ -17,7 +17,7 @@ import CalculationHistory from '@/Components/CalculationHistory.vue';
                 This is a simple calculator application. To use it, enter numbers in the two textboxes, select an operator from the dropdown, and then click the 'Calculate' button. The result of the calculation will be displayed below the button. The last 10 calculations you've made are displayed in the 'Calculation History' section at the bottom of the page. Enjoy calculating!
             </p>
             <Calculator />
-            <p>Calculation history:</p>
+            <p class="mt-4 mb-1">Calculation history:</p>
             <CalculationHistory />
         </div>
 
