@@ -1,8 +1,17 @@
 <script setup>
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import { ref } from 'vue';
 import Calculator from '@/Components/Calculator.vue';
 import CalculationHistory from '@/Components/CalculationHistory.vue';
+
+const components = {
+    Calculator,
+    CalculationHistory,
+};
+
+const calculationDone = ref(false);
 </script>
+
 
 <template>
     <div>
@@ -20,9 +29,9 @@ import CalculationHistory from '@/Components/CalculationHistory.vue';
                 <li>The result of the calculation will be displayed below the button.</li>
                 <li>The last 10 calculations you've made are displayed in the 'Calculation History' section at the bottom of the page.</li>
             </ul>
-            <Calculator />
+            <Calculator @calculation-done="calculationDone = !calculationDone" />
             <p class="mt-4 mb-1">Calculation history:</p>
-            <CalculationHistory />
+            <CalculationHistory :calculation-done="calculationDone" />
         </div>
 
     </div>

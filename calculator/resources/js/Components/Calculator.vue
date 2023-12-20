@@ -18,7 +18,8 @@ import { ref } from 'vue';
 import axios from 'axios';
 
 export default {
-    setup() {
+    emits: ['calculation-done'],
+    setup(props, { emit }) {
         const input1 = ref(0);
         const input2 = ref(0);
         const operator = ref('+');
@@ -31,6 +32,7 @@ export default {
                 operator: operator.value,
             }).then(response => {
                 result.value = response.data.result;
+                emit('calculation-done');
             });
         };
 

@@ -5,18 +5,23 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
 
 export default {
-    setup() {
+    props: ['calculationDone'],
+    setup(props) {
         const history = ref([]);
 
-        onMounted(() => {
+        const fetchHistory = () => {
             axios.get('/history').then(response => {
                 history.value = response.data.history;
             });
-        });
+        };
+
+        onMounted(fetchHistory);
+
+        watch(() => props.calculationDone, fetchHistory);
 
         return {
             history,
