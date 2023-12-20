@@ -34,5 +34,5 @@ Route::middleware([
     })->name('dashboard');
 
     Route::post('/calculate', [CalculationController::class, 'calculate'])->name('calculate');
-    Route::get('/history', [CalculationController::class, 'history'])->name('history');
+    Route::get('/history', [CalculationController::class, 'history']);
 });

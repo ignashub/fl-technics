@@ -9,30 +9,43 @@ class CalculationController extends Controller
 {
     public function calculate(Request $request)
     {
-        // Validate the request data
-        $data = $request->validate([
-            'expression' => 'required|string',
-        ]);
+        $input1 = $request->input('input1');
+        $input2 = $request->input('input2');
+        $operator = $request->input('operator');
 
-        // Perform the calculation (this is a very basic example, you'll need to replace this with your actual calculation logic)
-        $result = eval('return ' . $data['expression'] . ';');
+        $result = 0;
+        switch ($operator) {
+            case '+':
+                $result = $input1 + $input2;
+                break;
+            case '-':
+                $result = $input1 - $input2;
+                break;
+            case '*':
+                $result = $input1 * $input2;
+                break;
+            case '/':
+                if ($input2 != 0) {
+                    $result = $input1 / $input2;
+                }
+                break;
+        }
 
-        // Save the calculation in the database
-        $calculation = auth()->user()->calculations()->create([
-            'calculation' => $data['expression'],
-            'result' => $result,
-        ]);
+        $calculation = new Calculation;
+        $calculation->user_id = auth()->id();
+        $calculation->calculation = "$input1 $operator $input2 = $result";
+        $calculation->save();
 
-        // Return the calculation result
-        return response()->json($calculation, 201);
+        return response()->json(['result' => $result]);
     }
 
     public function history()
     {
-        // Fetch the last 10 calculations from the database
-        $calculations = Calculation::orderBy('created_at', 'desc')->take(10)->get();
+        $calculations = Calculation::where('user_id', auth()->id())
+            ->orderBy('id', 'desc')
+            ->limit(10)
+            ->get();
 
-        // Return the calculations
-        return response()->json($calculations);
+        return response()->json(['history' => $calculations]);
     }
 }
