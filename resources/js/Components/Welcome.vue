@@ -23,16 +23,32 @@ const calculationDone = ref(false);
             </h1>
 
             <ul class="mt-2 list-disc list-inside text-gray-500">
-                <li>Enter numbers in the two textboxes.</li>
-                <li>Select an operator from the dropdown.</li>
-                <li>Click the 'Calculate' button.</li>
-                <li>The result of the calculation will be displayed below the button.</li>
-                <li>The last 10 calculations you've made are displayed in the 'Calculation History' section at the bottom of the page.</li>
+                <li>Enter numbers in the textboxes.</li>
+                <li>Select an operator from the buttons.</li>
+                <li>Click the '=' button to get the result.</li>
+                <li>The result of the calculation will be displayed on the screen.</li>
+                <li>Your calculation history is displayed to the side.</li>
             </ul>
-            <Calculator @calculation-done="calculationDone = !calculationDone" />
-            <p class="mt-4 mb-1">Calculation history:</p>
-            <CalculationHistory :calculation-done="calculationDone" />
-        </div>
 
+            <div class="calculator-container">
+                <Calculator @calculation-done="calculationDone = !calculationDone" />
+            </div>
+        </div>
     </div>
 </template>
+
+<style scoped>
+.calculator-container {
+    display: flex;
+    align-items: flex-start;
+}
+
+.history-container {
+    width: 300px;
+    margin-left: 0;
+}
+
+.history-title {
+    margin-bottom: 10px;
+}
+</style>
