@@ -3,16 +3,18 @@
     <div class="calculator-with-history" v-on:keyup="handleKeyup">
         <div class="calculator">
             <div class="display">{{ displayValue }}</div>
-            <input v-model="inputValue" type="number" class="input">
+            <input v-model="inputValue" type="text" class="input"> <!-- Changed to type="text" -->
             <div class="operations">
                 <button @click="setOperation('+')" class="operation-btn">+</button>
                 <button @click="setOperation('-')" class="operation-btn">-</button>
                 <button @click="setOperation('*')" class="operation-btn">×</button>
                 <button @click="setOperation('/')" class="operation-btn">÷</button>
+                <button @click="setOperation('%')" class="operation-btn">%</button>
+                <button @click="setOperation('^')" class="operation-btn">^</button>
             </div>
             <button @click="calculate" class="calculate-btn">=</button>
         </div>
-        <div class="p-6 history-container">
+        <div class="history-container">
             <p class="history-title">Calculation history:</p>
             <CalculationHistory :calculation-done="calculationDone" />
         </div>
@@ -35,10 +37,13 @@ export default {
         const storedValue = ref('');
         const operator = ref(null);
         const result = ref('');
-        const displayValue = ref('');
+        const displayValue = ref('0');
         const calculationDone = ref(false);
 
         const handleKeyup = (event) => {
+        if (document.activeElement === document.querySelector('.input')) {
+            return;
+        }
         switch (event.key) {
             case 'Enter':
                 calculate();
@@ -96,7 +101,7 @@ export default {
                 }).then(response => {
                     result.value = response.data.result;
                     storedValue.value = result.value;
-                    displayValue.value = `${storedValue.value} ${operator.value ? operator.value : ''} ${inputValue.value ? inputValue.value : ''} = ${result.value}`;
+                    displayValue.value = result.value;
                     inputValue.value = '';
                     operator.value = null;
                     calculationDone.value = !calculationDone.value;
@@ -126,7 +131,7 @@ export default {
 }
 .history-container {
     width: 300px;
-    margin-left: 10px;
+    margin-left: 60px;
 }
 .calculator {
     background-color: #333;
@@ -178,15 +183,14 @@ export default {
 }
 
 .operations {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 buttons per row */
     gap: 10px;
     margin-bottom: 20px;
 }
 
 .operation-btn {
     flex: 0 0 auto;
-    width: 20%;
     padding: 15px 0;
     background-color: #ff6347;
     color: white;
@@ -197,7 +201,14 @@ export default {
     transition: background-color 0.3s ease;
 }
 
-.operation-btn:hover {
-    background-color: #e55347;
+/* Adjust the width of the equals button if necessary */
+.calculate-btn {
+    grid-column: span 4; /* Makes the equals button span all columns */
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 </style>

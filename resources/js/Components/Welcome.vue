@@ -14,19 +14,20 @@ const calculationDone = ref(false);
 
 
 <template>
-    <div>
-        <div class="p-6 bg-white border-b border-gray-200 lg:p-8">
-            <ApplicationLogo class="block w-auto h-16" />
+    <div class="parent-container">
+        <ApplicationLogo class="block h-28" />
 
-            <h1 class="mt-8 text-2xl font-medium text-gray-900">
-                Welcome to the Calculator application!
-            </h1>
-
-            <ul class="mt-2 list-disc list-inside text-gray-500">
-                <li>Use keyboard or use mouse and click buttons.</li>
-                <li>The result of the calculation will be displayed on the screen.</li>
-                <li>Your calculation history is displayed to the side.</li>
-            </ul>
+        <div class="content-container">
+            <div class="text-container">
+                <h1 class="text-2xl font-medium text-gray-900">
+                    Welcome to the Calculator application!
+                </h1>
+                <ul class="mt-4 list-disc list-inside text-gray-500">
+                    <li>Use keyboard or mouse to enter numbers.</li>
+                    <li>The result of the calculation will be displayed on the screen.</li>
+                    <li>Your calculation history is displayed on the side.</li>
+                </ul>
+            </div>
 
             <div class="calculator-container">
                 <Calculator @calculation-done="calculationDone = !calculationDone" />
@@ -36,14 +37,37 @@ const calculationDone = ref(false);
 </template>
 
 <style scoped>
-.calculator-container {
+.parent-container {
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+}
+
+.content-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.text-container {
+    flex: 1;
+    padding-right: 2rem;
+}
+
+.calculator-container {
+    flex: 1;
+    padding-left: 2rem;
 }
 
 .history-container {
     width: 300px;
-    margin-left: 0;
+    margin-left: 2rem;
 }
 
 .history-title {

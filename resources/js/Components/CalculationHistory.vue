@@ -1,6 +1,6 @@
 <template>
-    <div v-for="(calculation, index) in history" :key="calculation.id">
-        {{ index + 1 }}. {{ calculation.calculation }}
+    <div v-for="(calculation) in history" :key="calculation.id">
+        {{ calculation.calculation }}
     </div>
 </template>
 

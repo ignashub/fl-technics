@@ -29,6 +29,14 @@ class CalculationController extends Controller
                     $result = $input1 / $input2;
                 }
                 break;
+                case '%':
+                    if ($input2 != 0) {
+                        $result = $input1 % $input2;
+                    }
+                    break;
+                case '^':
+                    $result = pow($input1, $input2);
+                    break;
         }
 
         $calculation = new Calculation;
