@@ -1,47 +1,59 @@
+# Calculator Application
+
 This application consists of several Vue components and Laravel backend endpoints:
 
-- Calculator Component (resources/js/Components/Calculator.vue): This is the main component where users input their numbers and select an operator. It also contains a button to perform the calculation. When the button is clicked, a POST request is sent to the /calculate endpoint with the input numbers and operator. The result of the calculation is then displayed in this component.
+## Components
 
-- Calculation History Component (resources/js/Components/CalculationHistory.vue): This component displays the history of calculations. It listens for the calculation-done event, and upon receiving this event, it sends a GET request to the /history endpoint to fetch the updated history.
+- **Calculator Component**: (`resources/js/Components/Calculator.vue`) This is the main component where users input their numbers and select an operator. It also contains a button to perform the calculation. When the button is clicked, a POST request is sent to the `/calculate` endpoint with the input numbers and operator. The result of the calculation is then displayed in this component.
 
-- Welcome Page (resources/js/Components/Welcome.vue): This is the main page of the application. It includes the Calculator and CalculationHistory components.
+- **Calculation History Component**: (`resources/js/Components/CalculationHistory.vue`) This component displays the history of calculations. It listens for the `calculation-done` event, and upon receiving this event, it sends a GET request to the `/history` endpoint to fetch the updated history.
 
-- Backend Endpoints (/calculate and /history): These are the endpoints in your Laravel backend that perform the calculation and provide the calculation history. They are implemented in the app/Http/Controllers/CalculationController.php file.
+- **Welcome Page**: (`resources/js/Components/Welcome.vue`) This is the main page of the application. It includes the Calculator and CalculationHistory components.
 
-- User Migration (database/migrations/2014_10_12_100000_create_users_table.php): This migration file creates the users table in your database. It includes fields for the user's name, email, password, and other authentication-related fields.
+## Backend Endpoints
 
-- Calculation Migration (database/migrations/xxxx_xx_xx_xxxxxx_create_calculations_table.php): This migration file creates the calculations table in your database. It includes fields for storing each calculation's input numbers, operator, result, and the user who performed the calculation.
+- `/calculate` and `/history`: These are the endpoints in your Laravel backend that perform the calculation and provide the calculation history. They are implemented in the `app/Http/Controllers/CalculationController.php` file.
+
+## Database Migrations
+
+- **User Migration**: (`database/migrations/2014_10_12_100000_create_users_table.php`) This migration file creates the users table in your database. It includes fields for the user's name, email, password, and other authentication-related fields.
+
+- **Calculation Migration**: (`database/migrations/xxxx_xx_xx_xxxxxx_create_calculations_table.php`) This migration file creates the calculations table in your database. It includes fields for storing each calculation's input numbers, operator, result, and the user who performed the calculation.
 
 This application uses Laravel Jetstream for its authentication system. Jetstream provides a robust, modern scaffolding for user registration, login, email verification, two-factor authentication, session management, API support via Laravel Sanctum, and optional team management.
 
-1. Clone the repository: First, you need to clone the repository to your local machine. You can do this with the following command:
+## Setup
 
-   git clone <repository_url>
+1. **Install MySQL**: If you don't have MySQL installed, you'll need to install it. The installation process depends on your operating system. You can find instructions for various operating systems in the MySQL documentation.
 
-2. Install MySQL: If you don't have MySQL installed, you'll need to install it. The installation process depends on your operating system. You can find instructions for various operating systems in the MySQL documentation.
+### `sudo apt-get install mysql-server`
 
-3. Install dependencies: Navigate to the project directory and install the necessary dependencies with Composer and npm:
 
-   cd calculator
-   composer install
-   npm install
+2. **Install dependencies**: Navigate to the project directory and install the necessary dependencies with Composer and npm:
 
-4. Set up environment variables: Copy the .env.example file to a new file named .env:
+### `cd calculator`
+### `composer install`
+### `npm install`
 
-   cp .env.example .env
+3. **Set up environment variables**: Copy the `.env.example` file to a new file named `.env`:
 
-Then, open the .env file and set the necessary environment variables, such as your database connection details.
+### `cp .env.example .env`
 
-5. Generate application key: Run the following command to generate a new application key:
+4. **Run MySQL server**:
 
-   php artisan key:generate
+### `sudo service mysql start`
 
-6. Run migrations: Run the following command to execute the database migrations:
+5. **Generate application key**: Run the following command to generate a new application key:
 
-   php artisan migrate
+### `php artisan key:generate`
 
-7. Start the server: Finally, you can start the Laravel server with the following command:
+6. **Run migrations**: Run the following command to execute the database migrations:
 
-   php artisan serve
+### `php artisan migrate`
 
-You can now access the application in your web browser at http://localhost:8000.
+7. **Start the server**: Finally, you can start the Laravel server with the following command:
+
+### `php artisan serve`
+
+
+You can now access the application in your web browser at `http://localhost:8000`.
