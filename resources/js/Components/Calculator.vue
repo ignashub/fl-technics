@@ -42,30 +42,39 @@ export default {
         const calculationDone = ref(false);
 
         const handleKeyup = (event) => {
-        if (document.activeElement === document.querySelector('.input')) {
-            return;
-        }
-        switch (event.key) {
-            case 'Enter':
-                calculate();
-                break;
-            case '+':
-                setOperation('+');
-                break;
-            case '-':
-                setOperation('-');
-                break;
-            case '*':
-                setOperation('*');
-                break;
-            case '/':
-                setOperation('/');
-                break;
-            default:
-                if (!isNaN(event.key)) {
-                    inputValue.value += event.key;
-                }
-                break;
+            if (document.activeElement === document.querySelector('.input')) {
+                return;
+            }
+            switch (event.key) {
+                case 'Enter':
+                    if (inputValue.value) {
+                        storedValue.value = inputValue.value;
+                        displayValue.value = storedValue.value;
+                        inputValue.value = '';
+                        result.value = '';
+                    } else if (result.value && !operator.value) {
+                        storedValue.value = result.value;
+                        displayValue.value = storedValue.value;
+                        result.value = '';
+                    }
+                    break;
+                case '+':
+                    setOperation('+');
+                    break;
+                case '-':
+                    setOperation('-');
+                    break;
+                case '*':
+                    setOperation('*');
+                    break;
+                case '/':
+                    setOperation('/');
+                    break;
+                default:
+                    if (!isNaN(event.key)) {
+                        inputValue.value += event.key;
+                    }
+                    break;
             }
         };
 
@@ -95,7 +104,7 @@ export default {
         };
 
         const calculate = () => {
-            if ((storedValue.value && inputValue.value && operator.value) || (result.value && inputValue.value)) {
+            if (operator.value && (storedValue.value || result.value) && inputValue.value) {
                 let input1 = storedValue.value || result.value;
                 let input2 = inputValue.value;
 
@@ -106,6 +115,8 @@ export default {
                 }).then(response => {
                     result.value = response.data.result;
                     displayValue.value = result.value;
+                    // After calculation, storedValue is set to the result
+                    storedValue.value = result.value;
                     // Reset the inputValue and operator to allow for a new operation
                     inputValue.value = '';
                     operator.value = null;
