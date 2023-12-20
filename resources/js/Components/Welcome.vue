@@ -16,16 +16,14 @@ const calculationDone = ref(false);
 <template>
     <div>
         <div class="p-6 bg-white border-b border-gray-200 lg:p-8">
-            <ApplicationLogo class="block w-auto h-12" />
+            <ApplicationLogo class="block w-auto h-16" />
 
             <h1 class="mt-8 text-2xl font-medium text-gray-900">
                 Welcome to the Calculator application!
             </h1>
 
             <ul class="mt-2 list-disc list-inside text-gray-500">
-                <li>Enter numbers in the textboxes.</li>
-                <li>Select an operator from the buttons.</li>
-                <li>Click the '=' button to get the result.</li>
+                <li>Use keyboard or use mouse and click buttons.</li>
                 <li>The result of the calculation will be displayed on the screen.</li>
                 <li>Your calculation history is displayed to the side.</li>
             </ul>

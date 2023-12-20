@@ -1,11 +1,9 @@
 
 <template>
-    <div class="calculator-with-history">
+    <div class="calculator-with-history" v-on:keyup="handleKeyup">
         <div class="calculator">
-            <!-- Existing calculator template -->
             <div class="display">{{ displayValue }}</div>
             <input v-model="inputValue" type="number" class="input">
-            <!-- Operation buttons -->
             <div class="operations">
                 <button @click="setOperation('+')" class="operation-btn">+</button>
                 <button @click="setOperation('-')" class="operation-btn">-</button>
@@ -14,7 +12,7 @@
             </div>
             <button @click="calculate" class="calculate-btn">=</button>
         </div>
-        <div class="history-container">
+        <div class="p-6 history-container">
             <p class="history-title">Calculation history:</p>
             <CalculationHistory :calculation-done="calculationDone" />
         </div>
@@ -25,6 +23,7 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import CalculationHistory from '@/Components/CalculationHistory.vue';
+import { onMounted, onBeforeUnmount } from 'vue';
 
 export default {
     components: {
@@ -39,12 +38,52 @@ export default {
         const displayValue = ref('');
         const calculationDone = ref(false);
 
+        const handleKeyup = (event) => {
+        switch (event.key) {
+            case 'Enter':
+                calculate();
+                break;
+            case '+':
+                setOperation('+');
+                break;
+            case '-':
+                setOperation('-');
+                break;
+            case '*':
+                setOperation('*');
+                break;
+            case '/':
+                setOperation('/');
+                break;
+            default:
+                if (!isNaN(event.key)) {
+                    inputValue.value += event.key;
+                }
+                break;
+            }
+        };
+
+        onMounted(() => {
+            window.addEventListener('keyup', handleKeyup);
+        });
+
+        onBeforeUnmount(() => {
+            window.removeEventListener('keyup', handleKeyup);
+        });
+
         const setOperation = (op) => {
             if (inputValue.value) {
-                storedValue.value = inputValue.value;
-                operator.value = op;
-                displayValue.value = `${storedValue.value} ${op}`;
-                inputValue.value = '';
+                if (storedValue.value && operator.value) {
+                    calculate();
+                    operator.value = op;
+                    displayValue.value = `${storedValue.value} ${op}`;
+                    inputValue.value = '';
+                } else {
+                    storedValue.value = inputValue.value;
+                    operator.value = op;
+                    displayValue.value = `${storedValue.value} ${op}`;
+                    inputValue.value = '';
+                }
             }
         };
 
@@ -56,10 +95,10 @@ export default {
                     operator: operator.value,
                 }).then(response => {
                     result.value = response.data.result;
-                    displayValue.value = `${storedValue.value} ${operator.value} ${inputValue.value} = ${result.value}`; // Update the display with the full calculation
-                    inputValue.value = ''; // Optionally clear the input field
-                    storedValue.value = ''; // Clear the stored value
-                    operator.value = null; // Clear the operator
+                    storedValue.value = result.value;
+                    displayValue.value = `${storedValue.value} ${operator.value ? operator.value : ''} ${inputValue.value ? inputValue.value : ''} = ${result.value}`;
+                    inputValue.value = '';
+                    operator.value = null;
                     calculationDone.value = !calculationDone.value;
                     emit('calculation-done');
                 });
@@ -74,6 +113,7 @@ export default {
             calculationDone,
             calculate,
             setOperation,
+            handleKeyup,
         };
     },
 };
@@ -85,8 +125,8 @@ export default {
     align-items: flex-start;
 }
 .history-container {
-    width: 300px; /* Adjust width as needed */
-    margin-left: 10px; /* Adjust as needed for spacing */
+    width: 300px;
+    margin-left: 10px;
 }
 .calculator {
     background-color: #333;
@@ -139,16 +179,15 @@ export default {
 
 .operations {
     display: flex;
-    justify-content: center; /* Center the buttons horizontally */
-    gap: 10px; /* Add space between buttons */
+    justify-content: center;
+    gap: 10px;
     margin-bottom: 20px;
 }
 
 .operation-btn {
-    flex: 0 0 auto; /* Do not grow, do not shrink, and be based on width */
-    width: 20%; /* Set a base width for each button */
-    padding: 15px 0; /* More padding for a taller button */
-    /* The rest of your styles remain the same */
+    flex: 0 0 auto;
+    width: 20%;
+    padding: 15px 0;
     background-color: #ff6347;
     color: white;
     font-size: 1.5em;
