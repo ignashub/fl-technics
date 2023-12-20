@@ -43,15 +43,19 @@ This application uses Laravel Jetstream for its authentication system. Jetstream
 
 ### `sudo service mysql start`
 
-5. **Generate application key**: Run the following command to generate a new application key:
+5. **:Compile and optimize Vue and SCSS/LESS files into browser-compatible code for development in a Laravel PHP Vue project.
+
+### `npm run dev`
+
+6. **Generate application key**: Run the following command to generate a new application key:
 
 ### `php artisan key:generate`
 
-6. **Run migrations**: Run the following command to execute the database migrations:
+7. **Run migrations**: Run the following command to execute the database migrations:
 
 ### `php artisan migrate`
 
-7. **Start the server**: Finally, you can start the Laravel server with the following command:
+8. **Start the server**: Finally, you can start the Laravel server with the following command:
 
 ### `php artisan serve`
 
