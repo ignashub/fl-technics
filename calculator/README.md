@@ -1,7 +1,47 @@
-1. Kalkuliatoriaus komponentas (Calculator.vue): Tai pagrindinis komponentas, kuriame vartotojai įveda savo skaičius ir pasirenka operatorių. Jame taip pat yra mygtukas, skirtas atlikti skaičiavimą. Paspaudus mygtuką, siunčiamas POST užklausa į /calculate galutinį tašką su įvestais skaičiais ir operatoriumi. Skaičiavimo rezultatas tuomet rodomas šiame komponente.
+This application consists of several Vue components and Laravel backend endpoints:
 
-2. Skaičiavimų istorijos komponentas (CalculationHistory.vue): Šis komponentas rodo skaičiavimų istoriją. Jis klausosi calculation-done įvykio, ir gavęs šį įvykį, siunčia GET užklausą į /history galutinį tašką, kad gautų atnaujintą istoriją.
+- Calculator Component (resources/js/Components/Calculator.vue): This is the main component where users input their numbers and select an operator. It also contains a button to perform the calculation. When the button is clicked, a POST request is sent to the /calculate endpoint with the input numbers and operator. The result of the calculation is then displayed in this component.
 
-3. Pagrindinis puslapis (Welcome.vue): Tai pagrindinis programos puslapis. Jame yra įtraukti Calculator ir CalculationHistory komponentai.
+- Calculation History Component (resources/js/Components/CalculationHistory.vue): This component displays the history of calculations. It listens for the calculation-done event, and upon receiving this event, it sends a GET request to the /history endpoint to fetch the updated history.
 
-4. Backend galutiniai taškai (/calculate ir /history): Tai galutiniai taškai jūsų Laravel backend'e, kurie atlieka skaičiavimą ir pateikia skaičiavimų istoriją. Jums reikia įgyvendinti šiuos galutinius taškus savo Laravel programoje.
+- Welcome Page (resources/js/Components/Welcome.vue): This is the main page of the application. It includes the Calculator and CalculationHistory components.
+
+- Backend Endpoints (/calculate and /history): These are the endpoints in your Laravel backend that perform the calculation and provide the calculation history. They are implemented in the app/Http/Controllers/CalculationController.php file.
+
+- User Migration (database/migrations/2014_10_12_100000_create_users_table.php): This migration file creates the users table in your database. It includes fields for the user's name, email, password, and other authentication-related fields.
+
+- Calculation Migration (database/migrations/xxxx_xx_xx_xxxxxx_create_calculations_table.php): This migration file creates the calculations table in your database. It includes fields for storing each calculation's input numbers, operator, result, and the user who performed the calculation.
+
+This application uses Laravel Jetstream for its authentication system. Jetstream provides a robust, modern scaffolding for user registration, login, email verification, two-factor authentication, session management, API support via Laravel Sanctum, and optional team management.
+
+1. Clone the repository: First, you need to clone the repository to your local machine. You can do this with the following command:
+
+git clone <repository_url>
+
+2. Install MySQL: If you don't have MySQL installed, you'll need to install it. The installation process depends on your operating system. You can find instructions for various operating systems in the MySQL documentation.
+
+3. Install dependencies: Navigate to the project directory and install the necessary dependencies with Composer and npm:
+
+cd <project_directory>
+composer install
+npm install
+
+4. Set up environment variables: Copy the .env.example file to a new file named .env:
+
+cp .env.example .env
+
+Then, open the .env file and set the necessary environment variables, such as your database connection details.
+
+5. Generate application key: Run the following command to generate a new application key:
+
+php artisan key:generate
+
+6. Run migrations: Run the following command to execute the database migrations:
+
+php artisan migrate
+
+7. Start the server: Finally, you can start the Laravel server with the following command:
+
+php artisan serve
+
+You can now access the application in your web browser at http://localhost:8000.
